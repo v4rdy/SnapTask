@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/notes"
+        android:title="@string/title_notes"
+        android:icon="@drawable/ic_notes_24dp"/>
+
+    <item
+        android:id="@+id/tasks"
+        android:title="@string/title_tasks"
+        android:icon="@drawable/ic_tasks_24dp"/>
+
+    <item
+        android:id="@+id/add"
+        android:title="@string/title_add"
+        android:icon="@drawable/ic_add_24dp"/>
+
+    <item
+        android:id="@+id/goals"
+        android:title="@string/title_goals"
+        android:icon="@drawable/ic_goal_24dp"/>
+
+    <item
+        android:id="@+id/statistics"
+        android:title="@string/title_statistic"
+        android:icon="@drawable/ic_stat_black_24dp"/>
+
+
+</menu>

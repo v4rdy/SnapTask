@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "403104679363",
+    "firebase_url": "https://snap-task.firebaseio.com",
+    "project_id": "snap-task",
+    "storage_bucket": "snap-task.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403104679363:android:85a1e8fe6382492053e976",
+        "android_client_info": {
+          "package_name": "com.example.snaptask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "403104679363-8i2mq1fnesa6odpjnt5vje14enr3ch77.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.snaptask",
+            "certificate_hash": "0e3bcb8a658b8b19e2a864d60aab1bcdb8e25319"
+          }
+        },
+        {
+          "client_id": "403104679363-4352nqej80bkm7qa3dq87v98b1t8pml8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB9JKpF3N_Pbj_sVg1H7K44BHAhUjCt5Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "403104679363-4352nqej80bkm7qa3dq87v98b1t8pml8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

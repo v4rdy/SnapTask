@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">SnapTask</string>
+    <string name="title_activity_add_task">AddTask</string>
+    <string name="title_add">Add</string>
+    <string name="title_tasks">Tasks</string>
+    <string name="title_goals">Goals</string>
+    <string name="title_notes">Notes</string>
+    <string name="title_statistic">Statistic</string>
+    <string name="title_activity_home_add">HomeAddActivity</string>
+    <string name="please_choose_category">Please choose category:</string>
+    <string name="title_activity_test">Test</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="choose_day">Choose day</string>
+    <string name="choose_date">Choose date:</string>
+    <string name="choose_priority">Choose priority:</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="task_name">Task name</string>
+
+</resources>

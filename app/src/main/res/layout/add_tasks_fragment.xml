@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/choose_date"
+        android:textAlignment="center"
+        android:textColor="@color/dark_blue"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/today_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_btn"
+                android:button="@drawable/radio_btn"
+                android:checked="false"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/today"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/tomorrow_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_btn"
+                android:button="@drawable/radio_btn"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/tomorrow"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/choose_day_btn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_btn"
+                android:button="@drawable/radio_btn"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/choose_day"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/choose_priority"
+        android:textAlignment="center"
+        android:textColor="@color/dark_blue"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/low_btn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_btn"
+            android:button="@drawable/radio_btn"
+            android:checked="false"
+            android:drawableLeft="@drawable/green"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/low"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/medium_btn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_btn"
+            android:button="@drawable/radio_btn"
+            android:drawableLeft="@drawable/yellow"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/medium"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/high_btn"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_btn"
+            android:button="@drawable/radio_btn"
+            android:drawableLeft="@drawable/red"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/high"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:hint="@string/task_name"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColorHint="@color/hint2"
+        android:textColor="@color/dark_blue"
+        android:background="@drawable/switch_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="15sp"
+        android:textAlignment="viewStart"
+        android:paddingLeft="15dp"
+        />
+
+
+</LinearLayout>
