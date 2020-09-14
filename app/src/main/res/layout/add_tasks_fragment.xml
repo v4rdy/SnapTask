@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -18,8 +19,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
 
         <RadioGroup
@@ -103,9 +104,9 @@
             android:background="@drawable/radio_btn"
             android:button="@drawable/radio_btn"
             android:checked="false"
-            android:drawableLeft="@drawable/green"
-            android:paddingLeft="10dp"
+            android:drawableStart="@drawable/green"
             android:fontFamily="@font/poppins_semibold"
+            android:paddingStart="10dp"
             android:text="@string/low"
             android:textAlignment="center"
             android:textColor="@color/blue"
@@ -120,9 +121,9 @@
             android:layout_weight="1"
             android:background="@drawable/radio_btn"
             android:button="@drawable/radio_btn"
-            android:drawableLeft="@drawable/yellow"
-            android:paddingLeft="10dp"
+            android:drawableStart="@drawable/yellow"
             android:fontFamily="@font/poppins_semibold"
+            android:paddingStart="10dp"
             android:text="@string/medium"
             android:textAlignment="center"
             android:textColor="@color/blue"
@@ -137,9 +138,9 @@
             android:layout_weight="1"
             android:background="@drawable/radio_btn"
             android:button="@drawable/radio_btn"
-            android:drawableLeft="@drawable/red"
-            android:paddingLeft="10dp"
+            android:drawableStart="@drawable/red"
             android:fontFamily="@font/poppins_semibold"
+            android:paddingStart="10dp"
             android:text="@string/high"
             android:textAlignment="center"
             android:textColor="@color/blue"
@@ -148,21 +149,51 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/textView4"
+        android:id="@+id/task_name"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:hint="@string/task_name"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:textColorHint="@color/hint2"
-        android:textColor="@color/dark_blue"
         android:background="@drawable/switch_button"
         android:fontFamily="@font/poppins_semibold"
-        android:textSize="15sp"
-        android:textAlignment="viewStart"
+        android:hint="@string/task_name"
         android:paddingLeft="15dp"
-        />
+        android:textAlignment="viewStart"
+        android:textColor="@color/dark_blue"
+        android:textColorHint="@color/hint2"
+        android:textSize="15sp" />
 
+
+    <EditText
+        android:id="@+id/subtask_name"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/switch_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="@string/subtask_name"
+        android:paddingLeft="15dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/dark_blue"
+        android:textColorHint="@color/hint2"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/add_subtask_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="#00FFFFFF"
+        android:drawableStart="@drawable/add_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/add_subtask"
+        android:textAllCaps="false"
+        android:textColor="@color/hint2"
+        android:textSize="15sp" />
 
 </LinearLayout>
