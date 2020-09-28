@@ -28,5 +28,15 @@
     <string name="task_name">Task name</string>
     <string name="subtask_name">Subtask name</string>
     <string name="add_subtask">Add subtask</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_sign_out">Don\'t sign out</string>
+    <string name="remember_me">Remember me</string>
+    <string name="goal_name">Goal name</string>
+    <string name="steps">Write steps to help you achieve your goals</string>
+    <string name="add_step">Add step</string>
+    <string name="write_step">Write step</string>
+    <string name="title">Title</string>
+    <string name="text">Text</string>
+    <string name="add_task">Add new task</string>
 
 </resources>

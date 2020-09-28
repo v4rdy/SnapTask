@@ -1,10 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="393dp"
-    android:layout_height="590dp"
-    android:background="#231af4"
-    android:gravity="center"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/goal_name"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/switch_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:hint="@string/goal_name"
+            android:paddingStart="15dp"
+            android:textColor="@color/dark_blue"
+            android:textColorHint="@color/hint2"
+            android:textSize="15sp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/steps"
+            android:textAlignment="center"
+            android:textColor="@color/dark_blue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/step_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_step"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="#00FFFFFF"
+            android:drawableStart="@drawable/add_button"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/add_step"
+            android:textAllCaps="false"
+            android:textColor="@color/hint2"
+            android:textSize="15sp"
+            />
+    </LinearLayout>
+</ScrollView>

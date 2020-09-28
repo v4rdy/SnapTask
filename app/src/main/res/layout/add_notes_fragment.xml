@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="393dp"
-    android:layout_height="590dp"
-    android:background="#ED0909"
-    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
+    <EditText
+        android:id="@+id/note_title"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/switch_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="@string/title"
+        android:paddingStart="15dp"
+        android:textColor="@color/dark_blue"
+        android:textColorHint="@color/hint2"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/note_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/switch_button"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="@string/text"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/dark_blue"
+        android:textColorHint="@color/hint2"
+        android:textSize="15sp"
+        android:gravity="start"/>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.snaptask.menu;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ActionMenuView;
 import android.widget.Button;
+import android.widget.RadioButton;
 
 import com.example.snaptask.R;
 import com.example.snaptask.fragments.AddGoalsFragment;
@@ -22,7 +24,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 
 public class Add extends AppCompatActivity {
@@ -37,7 +38,24 @@ public class Add extends AppCompatActivity {
         Button notes_button = findViewById(R.id.notes_btn);
         Button tasks_button = findViewById(R.id.tasks_btn);
         Button goals_button = findViewById(R.id.goals_btn);
+        RadioButton rb = findViewById(R.id.choose_day_btn);
 
+
+        String date = null;
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            //The key argument here must match that used in the other activity
+            date = extras.getString("DATE_KEY");
+        }
+
+        AddTasksFragment frag = new AddTasksFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("DATE_KEY", date);
+        frag.setArguments(bundle);
+
+        Fragment fragment1 = new AddTasksFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment1).commit();
 
 
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

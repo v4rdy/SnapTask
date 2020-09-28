@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:background="@drawable/reg_button"
             android:layout_marginLeft="130dp"
             android:layout_marginTop="25dp"

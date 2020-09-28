@@ -7,15 +7,10 @@
     android:background="@color/white"
     tools:context=".menu.Tasks">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activity Tasks"
-        android:textSize="50sp"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"
-        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

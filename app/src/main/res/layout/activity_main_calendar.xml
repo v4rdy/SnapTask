@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainCalendar"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/poppins_semibold"
+    android:text="@string/choose_date"
+    android:layout_marginTop="20dp"
+    android:textAlignment="center"
+    android:textColor="@color/dark_blue"
+    android:textSize="20sp"
+    android:textStyle="bold" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/switch_button"
+        android:dateTextAppearance="@style/CalenderViewDateCustomText"
+        android:focusedMonthDateColor="@color/dark_blue"
+        android:fontFamily="@font/poppins_semibold"
+        android:scrollbarStyle="outsideInset"
+        android:theme="@style/CalenderViewCustom"
+
+        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
+        android:textColorPrimary="@color/dark_blue"/>
+
+
+
+
+</LinearLayout>

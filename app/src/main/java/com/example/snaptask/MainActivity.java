@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.session.MediaSessionManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText email, password;
     private Button sing_in, to_reg;
+    private CheckBox rememberMe;
     FirebaseAuth auth;
     FirebaseDatabase db;
 
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.editEmail);
         sing_in = findViewById(R.id.signin_btn);
         to_reg = findViewById(R.id.to_reg_btn);
-
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
@@ -86,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
+
             }
         });
 
 
     }
-
 }

@@ -16,5 +16,27 @@
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+    <style name="CheckboxTheme">
+        <item name="colorAccent">@color/blue</item>
+        <item name="colorControlNormal">@color/dark_blue</item>
+    </style>
+
+    <style name="CalenderViewCustom" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/blue</item>
+        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="android:textColorPrimary">@color/dark_blue</item>
+    </style>
+
+    <style name="CalenderViewDateCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:weekNumberColor">@color/blue</item>
+        <item name="android:focusedMonthDateColor">@color/dark_blue</item>
+    </style>
+
+    <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
+        <item name="android:textColor">@color/dark_blue</item>
+    </style>
+
 
 </resources>

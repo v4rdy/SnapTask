@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linear_layout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
-
+   <LinearLayout
+       android:id="@+id/linear_layout"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:background="@color/white"
+       android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:text="@string/choose_date"
         android:textAlignment="center"
         android:textColor="@color/dark_blue"
@@ -24,6 +30,7 @@
 
 
         <RadioGroup
+            android:id="@+id/date_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -78,18 +85,19 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/choose_priority"
-        android:textAlignment="center"
-        android:textColor="@color/dark_blue"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="10dp"
+           android:layout_marginBottom="10dp"
+           android:text="@string/choose_priority"
+           android:textAlignment="center"
+           android:textColor="@color/dark_blue"
+           android:textSize="22sp"
+           android:textStyle="bold" />
 
-    <RadioGroup
+       <RadioGroup
+           android:id="@+id/priority_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -158,42 +166,47 @@
         android:background="@drawable/switch_button"
         android:fontFamily="@font/poppins_semibold"
         android:hint="@string/task_name"
-        android:paddingLeft="15dp"
-        android:textAlignment="viewStart"
+        android:paddingStart="15dp"
         android:textColor="@color/dark_blue"
         android:textColorHint="@color/hint2"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        />
+        <LinearLayout
+            android:id="@+id/subtask_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
 
-
-    <EditText
-        android:id="@+id/subtask_name"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/switch_button"
-        android:fontFamily="@font/poppins_semibold"
-        android:hint="@string/subtask_name"
-        android:paddingLeft="15dp"
-        android:textAlignment="viewStart"
-        android:textColor="@color/dark_blue"
-        android:textColorHint="@color/hint2"
-        android:textSize="15sp" />
-
-    <Button
-        android:id="@+id/add_subtask_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="5dp"
-        android:background="#00FFFFFF"
-        android:drawableStart="@drawable/add_button"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/add_subtask"
-        android:textAllCaps="false"
-        android:textColor="@color/hint2"
-        android:textSize="15sp" />
-
-</LinearLayout>
+       <Button
+           android:id="@+id/add_subtask_btn"
+           android:layout_width="wrap_content"
+           android:layout_height="45dp"
+           android:layout_marginStart="5dp"
+           android:layout_marginTop="10dp"
+           android:background="#00FFFFFF"
+           android:drawableStart="@drawable/add_button"
+           android:fontFamily="@font/poppins_semibold"
+           android:text="@string/add_subtask"
+           android:textAllCaps="false"
+           android:textColor="@color/hint2"
+           android:textSize="15sp"
+            />
+       <Button
+           android:id="@+id/apply_btn"
+           android:layout_width="wrap_content"
+           android:layout_height="45dp"
+           android:layout_marginStart="5dp"
+           android:layout_marginTop="10dp"
+           android:layout_marginBottom="10dp"
+           android:background="#00FFFFFF"
+           android:drawableStart="@drawable/ic_baseline_check_24"
+           android:fontFamily="@font/poppins_semibold"
+           android:text="@string/add_task"
+           android:textAllCaps="false"
+           android:layout_gravity="center"
+           android:textColor="@color/dark_blue"
+           android:textSize="15sp"
+           />
+   </LinearLayout>
+</ScrollView>
