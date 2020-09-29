@@ -38,5 +38,6 @@
     <string name="title">Title</string>
     <string name="text">Text</string>
     <string name="add_task">Add new task</string>
+    <string name="day_today">Day: today</string>
 
 </resources>
