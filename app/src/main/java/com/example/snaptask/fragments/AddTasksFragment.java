@@ -115,8 +115,8 @@ public class AddTasksFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
             }
         });
-        String strtext = getArguments().getString("edttext");
-        System.out.println(strtext);
+      //  String strtext = getArguments().getString("edttext");
+        //System.out.println(strtext);
     }
 
     @Override
