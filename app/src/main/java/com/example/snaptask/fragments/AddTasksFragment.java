@@ -52,19 +52,20 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AddTasksFragment extends Fragment implements View.OnClickListener {
+public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSelected {
     private Button subtask_btn, apply_btn;
     private EditText subtask_name, task_name;
     private LinearLayout lin_lay, sb_lay;
     private RelativeLayout const_lay;
     private RadioGroup rgPriority, rgDay;
-    private RadioButton todayBtn, tomorrowBtn, chooseDayBtn, lowPrBtn, mediumPrBtn, highPrBtn;
+    private RadioButton todayBtn, tomorrowBtn, lowPrBtn, mediumPrBtn, highPrBtn;
+    public RadioButton chooseDayBtn;
     private String TASKS_KEY = "Tasks";
     public static final String DATE_KEY = "date";
+    private static final String TAG = "AddTasksFragment";
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference dataBase;
-
 
 
     @Nullable
@@ -73,10 +74,10 @@ public class AddTasksFragment extends Fragment implements View.OnClickListener {
 
         return inflater.inflate(R.layout.add_tasks_fragment, container, false);
 
-        }
+    }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         subtask_btn = (Button) view.findViewById(R.id.add_subtask_btn);
         subtask_name = (EditText) view.findViewById(R.id.subtask_name);
@@ -98,30 +99,36 @@ public class AddTasksFragment extends Fragment implements View.OnClickListener {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataBase = FirebaseDatabase.getInstance().getReference(TASKS_KEY);
+
+
         this.getResources().getDisplayMetrics();
 
 
-        subtask_btn.setOnClickListener(this);
+        subtask_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addView();
+            }
+        });
+
+
         apply_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 writeTask();
             }
         });
+
+
         chooseDayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainCalendar.class);
-                startActivity(intent);
+                MainCalendar mainCalendar = new MainCalendar();
+                mainCalendar.show(getParentFragmentManager(), "Main Calendar");
+                mainCalendar.setTargetFragment(AddTasksFragment.this, 1);
             }
         });
-      //  String strtext = getArguments().getString("edttext");
-        //System.out.println(strtext);
-    }
 
-    @Override
-    public void onClick(View v) {
-        addView();
     }
 
 
@@ -140,37 +147,37 @@ public class AddTasksFragment extends Fragment implements View.OnClickListener {
             subTasks[i] = editTextName.getText().toString();
 
             dataBase.child(Task).child("Subtasks").push().setValue(subTasks[i]);
-            }
-            dataBase.child(Task).push().setValue(getDay());
+        }
+        dataBase.child(Task).push().setValue(getDay());
     }
 
-    private String getDay(){
-        String day=null;
+    private String getDay() {
+        String day = null;
 
-        if(todayBtn.isChecked()){
+        if (todayBtn.isChecked()) {
             Date currentTime = Calendar.getInstance().getTime();
             day = currentTime.toString();
-        }
-        else if(tomorrowBtn.isChecked()){
+            System.out.println("Day is ---------- "+day);
+        } else if (tomorrowBtn.isChecked()) {
             Date dt = new Date();
             Calendar c = Calendar.getInstance();
             c.setTime(dt);
             c.add(Calendar.DATE, 1);
             dt = c.getTime();
             day = dt.toString();
-        }else if(chooseDayBtn.isChecked()) {
-//            day =  getArguments().getString("DATE_KEY");
-//            System.out.println(" Date is choosed ----------------------------------------------------------------------------" + day);
-//            chooseDayBtn.setText(day);
+            System.out.println("Day is ---------- "+day);
+        } else if (chooseDayBtn.isChecked()) {
+            day = (String) chooseDayBtn.getText();
+            System.out.println("Day is ---------- "+day);
         }
         return day;
     }
 
-    private void addView(){
+    private void addView() {
         final View subtaskView = getLayoutInflater().inflate(R.layout.subtask_raw, null, false);
 
-        EditText editText = (EditText)subtaskView.findViewById(R.id.subtask_name);
-        ImageView imageClose = (ImageView)subtaskView.findViewById(R.id.remove_subtask);
+        EditText editText = (EditText) subtaskView.findViewById(R.id.subtask_name);
+        ImageView imageClose = (ImageView) subtaskView.findViewById(R.id.remove_subtask);
 
         imageClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,18 +187,21 @@ public class AddTasksFragment extends Fragment implements View.OnClickListener {
         });
 
         sb_lay.addView(subtaskView);
-        String day;
-        day =  getArguments().getString("DATE_KEY");
-        System.out.println(" Date is choosed ----------------------------------------------------------------------------" + day);
+
 
     }
 
-    private void removeView(View view){
+    private void removeView(View view) {
         sb_lay.removeView(view);
     }
 
+    @Override
+    public void sendDate(String date) {
+        chooseDayBtn.setText(date);
+    }
 
-        //SignOut!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    //SignOut!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -203,6 +213,7 @@ public class AddTasksFragment extends Fragment implements View.OnClickListener {
 //            }
 //        });
 
-}
+    }
+
 
 
