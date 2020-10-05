@@ -12,6 +12,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".menu.Add"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -21,6 +22,7 @@
         </activity>
         <activity
             android:name=".menu.Notes"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -30,6 +32,7 @@
         </activity>
         <activity
             android:name=".menu.Tasks"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -58,6 +61,7 @@
 
         <activity
             android:name=".Registration"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -68,6 +72,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

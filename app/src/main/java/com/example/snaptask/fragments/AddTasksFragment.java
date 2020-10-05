@@ -48,9 +48,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSelected {
     private Button subtask_btn, apply_btn;
@@ -61,8 +63,9 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
     private RadioButton todayBtn, tomorrowBtn, lowPrBtn, mediumPrBtn, highPrBtn;
     public RadioButton chooseDayBtn;
     private String TASKS_KEY = "Tasks";
-    public static final String DATE_KEY = "date";
     private static final String TAG = "AddTasksFragment";
+    private String day;
+    private String priority;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference dataBase;
@@ -120,13 +123,50 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         });
 
 
-        chooseDayBtn.setOnClickListener(new View.OnClickListener() {
+
+        rgPriority.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                MainCalendar mainCalendar = new MainCalendar();
-                mainCalendar.show(getParentFragmentManager(), "Main Calendar");
-                mainCalendar.setTargetFragment(AddTasksFragment.this, 1);
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(lowPrBtn.isChecked()) priority = "Low";
+                if(mediumPrBtn.isChecked()) priority = "Medium";
+                if(highPrBtn.isChecked()) priority = "High";
             }
+        });
+
+        rgDay.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (todayBtn.isChecked()) {
+                    Date currentTime = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    day = df.format(currentTime);
+                }
+
+                if (tomorrowBtn.isChecked()) {
+                    Date dt = new Date();
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(dt);
+                    c.add(Calendar.DATE, 1);
+                    dt = c.getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    day = df.format(dt);
+                }
+
+                if (chooseDayBtn.isChecked()) {
+
+                    chooseDayBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MainCalendar mainCalendar = new MainCalendar();
+                            mainCalendar.show(getParentFragmentManager(), "Main Calendar");
+                            mainCalendar.setTargetFragment(AddTasksFragment.this, 1);
+                        }
+                    });
+
+                }
+            }
+
         });
 
     }
@@ -136,7 +176,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
     private void writeTask() {
         String Task;
         Task = task_name.getText().toString();
-        dataBase.push().setValue(Task);
+//        dataBase.push().setValue(Task);
 
         String[] subTasks = new String[sb_lay.getChildCount()];
         for (int i = 0; i < sb_lay.getChildCount(); i++) {
@@ -148,30 +188,12 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
 
             dataBase.child(Task).child("Subtasks").push().setValue(subTasks[i]);
         }
-        dataBase.child(Task).push().setValue(getDay());
+        if(!day.equals("")) dataBase.child(Task).child("Date").push().setValue(day);
+        if(!priority.equals("")) dataBase.child(Task).child("Priority").push().setValue(priority);
+
     }
 
-    private String getDay() {
-        String day = null;
 
-        if (todayBtn.isChecked()) {
-            Date currentTime = Calendar.getInstance().getTime();
-            day = currentTime.toString();
-            System.out.println("Day is ---------- "+day);
-        } else if (tomorrowBtn.isChecked()) {
-            Date dt = new Date();
-            Calendar c = Calendar.getInstance();
-            c.setTime(dt);
-            c.add(Calendar.DATE, 1);
-            dt = c.getTime();
-            day = dt.toString();
-            System.out.println("Day is ---------- "+day);
-        } else if (chooseDayBtn.isChecked()) {
-            day = (String) chooseDayBtn.getText();
-            System.out.println("Day is ---------- "+day);
-        }
-        return day;
-    }
 
     private void addView() {
         final View subtaskView = getLayoutInflater().inflate(R.layout.subtask_raw, null, false);
@@ -187,6 +209,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         });
 
         sb_lay.addView(subtaskView);
+        System.out.println("Day is ---------- " + day);
 
 
     }
@@ -198,6 +221,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
     @Override
     public void sendDate(String date) {
         chooseDayBtn.setText(date);
+        day = date;
     }
 
 
