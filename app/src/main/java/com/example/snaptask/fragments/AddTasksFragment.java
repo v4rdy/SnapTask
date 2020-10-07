@@ -1,20 +1,9 @@
 package com.example.snaptask.fragments;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.ContextThemeWrapper;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,34 +11,18 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-
-import com.example.snaptask.MainActivity;
 import com.example.snaptask.MainCalendar;
 import com.example.snaptask.R;
-import com.example.snaptask.Registration;
-import com.example.snaptask.menu.Add;
-import com.example.snaptask.menu.Goals;
-import com.example.snaptask.menu.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -103,8 +76,6 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataBase = FirebaseDatabase.getInstance().getReference(TASKS_KEY);
 
-
-        this.getResources().getDisplayMetrics();
 
 
         subtask_btn.setOnClickListener(new View.OnClickListener() {
@@ -176,20 +147,40 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
     private void writeTask() {
         String Task;
         Task = task_name.getText().toString();
-//        dataBase.push().setValue(Task);
 
-        String[] subTasks = new String[sb_lay.getChildCount()];
-        for (int i = 0; i < sb_lay.getChildCount(); i++) {
 
-            View subtaskView = sb_lay.getChildAt(i);
+        if(day == null) Toast.makeText(getActivity(), "Please choose a date!", Toast.LENGTH_SHORT).show();
+        else if(priority == null) Toast.makeText(getActivity(), "Please choose a priority!", Toast.LENGTH_SHORT).show();
+        else if(Task.isEmpty()) Toast.makeText(getActivity(), "Please write a name of task!", Toast.LENGTH_SHORT).show();
+        else if(sb_lay.getChildCount() != 0) {
+            String[] subTasks = new String[sb_lay.getChildCount()];
+            for(int i = 1; i<sb_lay.getChildCount(); i++){
 
-            EditText editTextName = (EditText) subtaskView.findViewById(R.id.subtask_name);
-            subTasks[i] = editTextName.getText().toString();
+                View subtaskView = sb_lay.getChildAt(i);
+                EditText editTextName = (EditText) subtaskView.findViewById(R.id.subtask_name);
+                subTasks[i] = editTextName.getText().toString();
 
-            dataBase.child(Task).child("Subtasks").push().setValue(subTasks[i]);
+                if(subTasks[i].isEmpty()) {
+                    Toast.makeText(getActivity(), "Please write a name of Subtask!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            for (int i = 0; i < sb_lay.getChildCount(); i++) {
+
+                View subtaskView = sb_lay.getChildAt(i);
+
+                EditText editTextName = (EditText) subtaskView.findViewById(R.id.subtask_name);
+                subTasks[i] = editTextName.getText().toString();
+                dataBase.child(Task).child("Subtasks").push().setValue(subTasks[i]);
+            }
+            dataBase.child(Task).child("Date").push().setValue(day);
+            dataBase.child(Task).child("Priority").push().setValue(priority);
+
         }
-        if(!day.equals("")) dataBase.child(Task).child("Date").push().setValue(day);
-        if(!priority.equals("")) dataBase.child(Task).child("Priority").push().setValue(priority);
+        else{
+            dataBase.child(Task).child("Date").push().setValue(day);
+            dataBase.child(Task).child("Priority").push().setValue(priority);
+        }
 
     }
 
@@ -197,8 +188,6 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
 
     private void addView() {
         final View subtaskView = getLayoutInflater().inflate(R.layout.subtask_raw, null, false);
-
-        EditText editText = (EditText) subtaskView.findViewById(R.id.subtask_name);
         ImageView imageClose = (ImageView) subtaskView.findViewById(R.id.remove_subtask);
 
         imageClose.setOnClickListener(new View.OnClickListener() {
@@ -209,9 +198,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         });
 
         sb_lay.addView(subtaskView);
-        System.out.println("Day is ---------- " + day);
-
-
+        
     }
 
     private void removeView(View view) {
