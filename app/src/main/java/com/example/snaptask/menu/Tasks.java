@@ -1,10 +1,12 @@
 package com.example.snaptask.menu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -18,7 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class Tasks extends AppCompatActivity {
@@ -27,7 +35,7 @@ public class Tasks extends AppCompatActivity {
     CustomExpandableListAdapter expandableListAdapter;
 
     List<String> tasks;
-    Map<String, List<String>> subtasks;
+    HashMap<String, List<String>> subtasks;
 
     private FirebaseDatabase firebasedatabase;
     private DatabaseReference databaseReference;
@@ -41,9 +49,10 @@ public class Tasks extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.tasks);
         expandableListView = (ExpandableListView) findViewById(R.id.tasks_list);
 
-        firebasedatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebasedatabase.getReference("Tasks");
         fillData();
+        System.out.println(tasks);
+        System.out.println(subtasks);
+
         expandableListAdapter = new CustomExpandableListAdapter(this, tasks, subtasks);
         expandableListView.setAdapter(expandableListAdapter);
 
@@ -82,23 +91,38 @@ public class Tasks extends AppCompatActivity {
 
     public void fillData()
     {
+        tasks = new ArrayList<>();
+        subtasks = new HashMap<>();
+        firebasedatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebasedatabase.getReference("Tasks");
         databaseReference.addValueEventListener(new ValueEventListener() {
-            List<String> task;
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(task.size() > 0) task.clear();
-                for(DataSnapshot ds : dataSnapshot.getChildren())
-                {
-                  String taskName = (String) ds.getValue();
-                  tasks.add(taskName);
-                }
 
+                if(tasks.size() > 0) tasks.clear();
+                ArrayList<String> childSubtasks;
+                for(DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+                    DataSnapshot subtaskSnapshot = taskSnapshot.child("Subtasks");
+                    String taskName = taskSnapshot.getKey();
+                    System.out.println(taskName);
+                    tasks.add(taskName);
+                    childSubtasks = new ArrayList<String>();
+                    for (DataSnapshot subtasksSnapshot : subtaskSnapshot.getChildren()) {
+
+                        String childNames = subtasksSnapshot.getValue(String.class);
+                        System.out.println(childNames);
+                        childSubtasks.add(childNames);
+                        Log.e("TAG", "Subtasks :" + childSubtasks);
+                    }
+                    subtasks.put(taskName, childSubtasks);
+                }
                 expandableListAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                throw databaseError.toException();
             }
         });
     }

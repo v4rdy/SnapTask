@@ -8,6 +8,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,8 +17,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listHeader;
-    private Map<String, List<String>> listChildren;
-    public CustomExpandableListAdapter(Context context, List<String> listHeader, Map<String, List<String>> listChildren){
+    private HashMap<String, List<String>> listChildren;
+    public CustomExpandableListAdapter(Context context, List<String> listHeader, HashMap<String, List<String>> listChildren){
         this.context = context;
         this.listHeader = listHeader;
         this.listChildren = listChildren;
@@ -24,12 +26,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return this.listHeader.size();
+        return listHeader.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this.listChildren.get(listHeader.get(groupPosition)).size();
+        return listChildren.get(listHeader.get(groupPosition)).size();
     }
 
     @Override
@@ -39,7 +41,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this.listChildren.get(this.listHeader.get(groupPosition));
+        return listChildren.get(listHeader.get(groupPosition));
     }
 
     @Override
@@ -63,7 +65,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
         if(convertView == null)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_view_header, null);
         }
 
@@ -74,11 +76,11 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String child = (String) getChild(groupPosition, childPosition);
+        String child = (String) this.getChild(groupPosition, childPosition);
 
         if(convertView == null)
         {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_view_child, null);
         }
 
