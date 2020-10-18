@@ -36,22 +36,32 @@
         android:layout_centerInParent="true"/>
 
 
-    <ScrollView
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignBottom="@id/today_btn">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical">-->
+<!--            <ExpandableListView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/tasks_list"/>-->
+
+<!--        </LinearLayout>-->
+<!--    </ScrollView>-->
+
+
+    <ExpandableListView
+        android:id="@+id/tasks_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/today_btn">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ExpandableListView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/tasks_list"/>
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_below="@+id/today_btn"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

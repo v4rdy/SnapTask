@@ -1,50 +1,65 @@
 package com.example.snaptask;
 
         import androidx.annotation.NonNull;
+        import androidx.annotation.Nullable;
         import androidx.appcompat.app.AppCompatActivity;
+        import androidx.fragment.app.DialogFragment;
 
+        import android.content.Context;
         import android.content.Intent;
         import android.os.Bundle;
+        import android.util.Log;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
         import android.widget.Button;
         import android.widget.CalendarView;
 
         import com.example.snaptask.fragments.AddTasksFragment;
         import com.example.snaptask.menu.Add;
 
-public class MainCalendar extends AppCompatActivity {
+public class MainCalendar extends DialogFragment {
     private CalendarView Calendar;
     private String date;
+    private static final String TAG = "MainCalendar";
 
+    public interface OnDateSelected{
+         void sendDate(String date);
+    }
+    public OnDateSelected mOnInputSelected;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_calendar);
-        Calendar = (CalendarView) findViewById(R.id.calendarView);
+    @Nullable
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.activity_main_calendar, container, false);
 
-
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Calendar = (CalendarView) view.findViewById(R.id.calendarView);
 
         Calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 date = (dayOfMonth+"/"+month+"/"+year);
                 System.out.println(date);
-//                Intent intent = new Intent(MainCalendar.this, Add.class);
-//                intent.putExtra("DATE_KEY", date);
-                getInstance(date);
-                finish();
+                mOnInputSelected.sendDate(date);
+                getDialog().dismiss();
             }
-
         });
+
     }
 
-    public static AddTasksFragment getInstance(String date){
-        Bundle bundle = new Bundle();
-        bundle.putString("edttext", date);
-        // set Fragmentclass Arguments
-        AddTasksFragment fragobj = new AddTasksFragment ();
-        fragobj.setArguments(bundle);
-        return fragobj;
-    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            mOnInputSelected = (OnDateSelected) getTargetFragment();
 
+        }catch (ClassCastException e){
+            Log.e(TAG, "onAttach: ClassCastException: "+ e.getMessage());
+        }
+    }
 }
