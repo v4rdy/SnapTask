@@ -1,27 +1,48 @@
 package com.example.snaptask;
 
 import android.content.Context;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> listHeader;
     private HashMap<String, List<String>> listChildren;
-    public CustomExpandableListAdapter(Context context, List<String> listHeader, HashMap<String, List<String>> listChildren){
+    private HashMap<String, String> priority;
+    private HashMap<String, String> status;
+    private String day;
+    public CustomExpandableListAdapter(Context context, List<String> listHeader, HashMap<String, List<String>> listChildren, HashMap<String, String> priority, HashMap<String, String> status, String day){
         this.context = context;
         this.listHeader = listHeader;
         this.listChildren = listChildren;
+        this.priority = priority;
+        this.status = status;
+        this.day = day;
     }
 
     @Override
@@ -37,6 +58,15 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public Object getGroup(int groupPosition) {
         return this.listHeader.get(groupPosition);
+    }
+
+
+    public Object getPriority(int groupPosition) {
+        return priority.get(listHeader.get(groupPosition));
+    }
+
+    public Object getStatus(int groupPosition) {
+        return status.get(listHeader.get(groupPosition));
     }
 
     @Override
@@ -60,23 +90,60 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        String header = (String) getGroup(groupPosition);
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        final String header = (String) getGroup(groupPosition);
+        String priorityImage = (String) getPriority(groupPosition);
+        String statusOfTask = (String) getStatus(groupPosition);
+
+        Log.e("TAG", "Priority in adapter - " + priorityImage);
+        Log.e("TAG", "Status in adapter - " + statusOfTask);
 
         if(convertView == null)
         {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_view_header, null);
         }
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.image_view_header);
+        final TextView headerOfGroup = (TextView) convertView.findViewById(R.id.header_text);
+        Log.e("TAG", "Task adapter :" + header);
 
-        TextView headerOfGroup = (TextView) convertView.findViewById(R.id.header_text);
+        switch (priorityImage){
+            case "c":
+                imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.green));
+                break;
+            case "b":
+                imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.yellow));
+                break;
+            case "a":
+                imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.red));
+                break;
+        }
         headerOfGroup.setText(header);
+
+        if(statusOfTask.equals("true")) headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+
+        final Button done = (Button) convertView.findViewById(R.id.task_done_btn);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+
+                FirebaseUser firebaseUser;
+                DatabaseReference dataBase;
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                dataBase = FirebaseDatabase.getInstance().getReference();
+                dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(header).child("status").setValue("true");
+                CustomExpandableListAdapter.this.notifyDataSetChanged();
+            }
+        });
         return convertView;
     }
 
+
+
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        String child = (String) this.getChild(groupPosition, childPosition);
+        List<String> child = (List<String>) getChild(groupPosition, childPosition);
 
         if(convertView == null)
         {
@@ -85,7 +152,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView childText = (TextView) convertView.findViewById(R.id.child_text);
-        childText.setText(child);
+        Log.e("TAG", "Subtasks adapter :" + child.get(childPosition));
+        childText.setText(child.get(childPosition));
         return convertView;
     }
 

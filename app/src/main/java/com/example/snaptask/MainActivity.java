@@ -17,13 +17,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText email, password;
     private Button sing_in, to_reg;
-    private CheckBox rememberMe;
     FirebaseAuth auth;
     FirebaseDatabase db;
 
@@ -42,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
 
         addListenerOnButton();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //System.out.println(user.getUid());
+        if (user != null) {
+            finish();
+            Intent intent2 = new Intent(MainActivity.this, Add.class);
+            startActivity(intent2);
+        }
+        updateUI(currentUser);
     }
 
     public void addListenerOnButton (){
@@ -78,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                FirebaseUser user = auth.getCurrentUser();
+                                updateUI(user);
+                                finish();
                             Toast.makeText(getApplicationContext(), "Sign in was successful", Toast.LENGTH_SHORT).show();
                                 Intent intent2 = new Intent(MainActivity.this, Add.class);
                                 startActivity(intent2);
@@ -92,6 +109,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+    }
+    public void updateUI(FirebaseUser account){
+
+        if(account != null){
+            Toast.makeText(this,"U Signed In successfully",Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this,Add.class));
+
+        }else {
+            Toast.makeText(this,"U Didnt signed in",Toast.LENGTH_LONG).show();
+        }
 
     }
 }

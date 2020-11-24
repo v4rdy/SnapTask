@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/red"
         android:paddingTop="5dp"
-        android:paddingStart="10dp"/>
+        android:paddingStart="10dp"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/header_text"
@@ -21,6 +22,19 @@
         android:textSize="20sp"
         android:textColor="@color/dark_blue"
         android:textAllCaps="false"
-        android:fontFamily="@font/poppins_semibold"/>
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_weight="115"/>
+
+    <RadioButton
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/task_done_btn"
+        android:button="@drawable/radio_btn"
+        android:background="@drawable/radio_btn"
+        android:layout_weight="1"
+        android:focusable="false"
+        android:layout_marginEnd="10dp"
+        />
+
 
 </LinearLayout>

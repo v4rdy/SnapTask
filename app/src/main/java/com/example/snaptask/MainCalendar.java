@@ -43,7 +43,8 @@ public class MainCalendar extends DialogFragment {
         Calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                date = (dayOfMonth+"/"+month+"/"+year);
+                month +=1;
+                date = (dayOfMonth+"-"+month+"-"+year);
                 System.out.println(date);
                 mOnInputSelected.sendDate(date);
                 getDialog().dismiss();
@@ -57,6 +58,7 @@ public class MainCalendar extends DialogFragment {
         super.onAttach(context);
         try{
             mOnInputSelected = (OnDateSelected) getTargetFragment();
+            mOnInputSelected = (OnDateSelected) getActivity();
 
         }catch (ClassCastException e){
             Log.e(TAG, "onAttach: ClassCastException: "+ e.getMessage());

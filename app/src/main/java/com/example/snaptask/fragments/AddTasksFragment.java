@@ -74,7 +74,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        dataBase = FirebaseDatabase.getInstance().getReference(TASKS_KEY);
+        dataBase = FirebaseDatabase.getInstance().getReference();
 
 
 
@@ -98,9 +98,28 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         rgPriority.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(lowPrBtn.isChecked()) priority = "Low";
-                if(mediumPrBtn.isChecked()) priority = "Medium";
-                if(highPrBtn.isChecked()) priority = "High";
+                if(lowPrBtn.isChecked()){
+                    priority = "c";
+
+                lowPrBtn.setTextColor(getResources().getColor(R.color.white));
+                mediumPrBtn.setTextColor(getResources().getColor(R.color.blue));
+                highPrBtn.setTextColor(getResources().getColor(R.color.blue));
+                }
+
+                if(mediumPrBtn.isChecked()){
+                    priority = "b";
+
+                    lowPrBtn.setTextColor(getResources().getColor(R.color.blue));
+                    mediumPrBtn.setTextColor(getResources().getColor(R.color.white));
+                    highPrBtn.setTextColor(getResources().getColor(R.color.blue));
+                }
+                if(highPrBtn.isChecked()){
+                    priority = "a";
+
+                    lowPrBtn.setTextColor(getResources().getColor(R.color.blue));
+                    mediumPrBtn.setTextColor(getResources().getColor(R.color.blue));
+                    highPrBtn.setTextColor(getResources().getColor(R.color.white));
+                }
             }
         });
 
@@ -109,22 +128,37 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 if (todayBtn.isChecked()) {
+
+                    todayBtn.setTextColor(getResources().getColor(R.color.white));
+                    tomorrowBtn.setTextColor(getResources().getColor(R.color.blue));
+                    chooseDayBtn.setTextColor(getResources().getColor(R.color.blue));
+
                     Date currentTime = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     day = df.format(currentTime);
+                    System.out.println(firebaseUser.getUid());
                 }
 
                 if (tomorrowBtn.isChecked()) {
+
+                    todayBtn.setTextColor(getResources().getColor(R.color.blue));
+                    tomorrowBtn.setTextColor(getResources().getColor(R.color.white));
+                    chooseDayBtn.setTextColor(getResources().getColor(R.color.blue));
+
                     Date dt = new Date();
                     Calendar c = Calendar.getInstance();
                     c.setTime(dt);
                     c.add(Calendar.DATE, 1);
                     dt = c.getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     day = df.format(dt);
                 }
 
                 if (chooseDayBtn.isChecked()) {
+
+                    todayBtn.setTextColor(getResources().getColor(R.color.blue));
+                    tomorrowBtn.setTextColor(getResources().getColor(R.color.blue));
+                    chooseDayBtn.setTextColor(getResources().getColor(R.color.white));
 
                     chooseDayBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -147,7 +181,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
     private void writeTask() {
         String Task;
         Task = task_name.getText().toString();
-
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(day == null) Toast.makeText(getActivity(), "Please choose a date!", Toast.LENGTH_SHORT).show();
         else if(priority == null) Toast.makeText(getActivity(), "Please choose a priority!", Toast.LENGTH_SHORT).show();
@@ -171,15 +205,14 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
 
                 EditText editTextName = (EditText) subtaskView.findViewById(R.id.subtask_name);
                 subTasks[i] = editTextName.getText().toString();
-                dataBase.child(Task).child("Subtasks").push().setValue(subTasks[i]);
+                dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("subtasks").push().setValue(subTasks[i]);
             }
-            dataBase.child(Task).child("Date").push().setValue(day);
-            dataBase.child(Task).child("Priority").push().setValue(priority);
-
+            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("priority").push().setValue(priority);
+            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("status").setValue("false");
         }
         else{
-            dataBase.child(Task).child("Date").push().setValue(day);
-            dataBase.child(Task).child("Priority").push().setValue(priority);
+            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("priority").push().setValue(priority);
+            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("status").setValue("false");
         }
 
     }
@@ -210,19 +243,6 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         chooseDayBtn.setText(date);
         day = date;
     }
-
-
-    //SignOut!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(getActivity(), MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//            }
-//        });
 
     }
 

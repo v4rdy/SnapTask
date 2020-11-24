@@ -12,12 +12,23 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logout"
+            android:text="Log out"
+            android:textColor="@color/dark_blue"
+            android:background="@color/white"
+            android:fontFamily="@font/poppins_semibold"
+            android:textSize="15dp"/>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Please choose category:"
             android:fontFamily="@font/poppins_semibold"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:textAlignment="center"
             android:textColor="@color/dark_blue"
@@ -29,11 +40,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/rg_cat">
+            <RadioButton
                 android:id="@+id/notes_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/switch_button"
+                android:layout_height="45dp"
+                android:background="@drawable/radio_btn"
+                android:button="@drawable/radio_btn"
                 android:fontFamily="@font/poppins_semibold"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
@@ -41,34 +58,39 @@
                 android:text="@string/title_notes"
                 android:textColor="@color/blue"
                 android:textSize="20sp"
-                />
+                android:textAlignment="center" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/tasks_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/switch_button"
+                android:layout_height="45dp"
+                android:background="@drawable/radio_btn"
+                android:button="@drawable/radio_btn"
                 android:fontFamily="@font/poppins_semibold"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:checked="true"
                 android:text="@string/title_tasks"
-                android:textColor="@color/blue"
-                android:textSize="20sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textAlignment="center" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/goals_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/switch_button"
+                android:layout_height="45dp"
+                android:background="@drawable/radio_btn"
+                android:button="@drawable/radio_btn"
                 android:fontFamily="@font/poppins_semibold"
                 android:layout_weight="1"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:text="@string/title_goals"
                 android:textColor="@color/blue"
-                android:textSize="20sp" />
-
+                android:textSize="20sp"
+                android:textAlignment="center"/>
+            </RadioGroup>
 
         </LinearLayout>
 
@@ -86,7 +108,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/fragment_container"/>
+            android:id="@+id/fragment_container"
+            android:layout_marginBottom="55dp"/>
 
 
 

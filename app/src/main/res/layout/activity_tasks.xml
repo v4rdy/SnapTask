@@ -7,7 +7,11 @@
     android:background="@color/white"
     tools:context=".menu.Tasks"
     android:orientation="vertical">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:id="@+id/linear_layout"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:id="@+id/text_tasks"
         android:layout_width="match_parent"
@@ -20,10 +24,9 @@
         android:layout_marginTop="10dp"/>
 
     <Button
-        android:id="@+id/today_btn"
+        android:id="@+id/show_calendar_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_tasks"
         android:layout_marginTop="10dp"
         android:background="@drawable/switch_button"
         android:fontFamily="@font/poppins_semibold"
@@ -33,35 +36,18 @@
         android:textAlignment="center"
         android:textColor="@color/blue"
         android:textSize="18sp"
-        android:layout_centerInParent="true"/>
-
-
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignBottom="@id/today_btn">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-<!--            <ExpandableListView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:id="@+id/tasks_list"/>-->
-
-<!--        </LinearLayout>-->
-<!--    </ScrollView>-->
-
-
-    <ExpandableListView
-        android:id="@+id/tasks_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/today_btn"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         />
+</LinearLayout>
+
+
+        <ExpandableListView
+            android:id="@+id/tasks_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linear_layout"
+            />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

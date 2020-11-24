@@ -10,7 +10,9 @@ import android.view.View;
 import android.widget.ActionMenuView;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
+import com.example.snaptask.MainActivity;
 import com.example.snaptask.R;
 import com.example.snaptask.fragments.AddGoalsFragment;
 import com.example.snaptask.fragments.AddNotesFragment;
@@ -20,6 +22,8 @@ import com.example.snaptask.menu.Notes;
 import com.example.snaptask.menu.Statistics;
 import com.example.snaptask.menu.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,9 +39,11 @@ public class Add extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.add);
-        Button notes_button = findViewById(R.id.notes_btn);
-        Button tasks_button = findViewById(R.id.tasks_btn);
-        Button goals_button = findViewById(R.id.goals_btn);
+        final RadioButton notes_button = findViewById(R.id.notes_btn);
+        final RadioButton tasks_button = findViewById(R.id.tasks_btn);
+        final RadioButton goals_button = findViewById(R.id.goals_btn);
+        RadioGroup rgCategory = findViewById(R.id.rg_cat);
+        Button logOut = findViewById(R.id.logout);
         RadioButton rb = findViewById(R.id.choose_day_btn);
 
 
@@ -86,34 +92,68 @@ public class Add extends AppCompatActivity {
                 return false;
             }
         });
-
-        Fragment fragment = new AddTasksFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-
-        tasks_button.setOnClickListener(new View.OnClickListener() {
+        rgCategory.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 Fragment fragment = new AddTasksFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                if(tasks_button.isChecked()) {
+                    tasks_button.setTextColor(getResources().getColor(R.color.white));
+                    notes_button.setTextColor(getResources().getColor(R.color.blue));
+                    goals_button.setTextColor(getResources().getColor(R.color.blue));
+
+                    tasks_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            System.out.println(user.getUid());
+                            Fragment fragment = new AddTasksFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                        }
+                    });
+                }
+                if(notes_button.isChecked()) {
+                    tasks_button.setTextColor(getResources().getColor(R.color.blue));
+                    notes_button.setTextColor(getResources().getColor(R.color.white));
+                    goals_button.setTextColor(getResources().getColor(R.color.blue));
+
+                    notes_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Fragment fragment = new AddNotesFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                        }
+                    });
+                }
+                if(goals_button.isChecked()) {
+                    tasks_button.setTextColor(getResources().getColor(R.color.blue));
+                    notes_button.setTextColor(getResources().getColor(R.color.blue));
+                    goals_button.setTextColor(getResources().getColor(R.color.white));
+
+                    goals_button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Fragment fragment = new AddGoalsFragment();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                        }
+                    });
+                }
+
+
+
             }
         });
 
-        notes_button.setOnClickListener(new View.OnClickListener() {
+        logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new AddNotesFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Add.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
-
-        goals_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new AddGoalsFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-            }
-        });
-//
 
 
     }
