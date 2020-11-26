@@ -207,11 +207,11 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
                 subTasks[i] = editTextName.getText().toString();
                 dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("subtasks").push().setValue(subTasks[i]);
             }
-            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("priority").push().setValue(priority);
+            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("priority").setValue(priority);
             dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("status").setValue("false");
         }
         else{
-            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("priority").push().setValue(priority);
+            dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("priority").setValue(priority);
             dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(Task).child("status").setValue("false");
         }
 

@@ -25,12 +25,12 @@
         android:fontFamily="@font/poppins_semibold"
         android:layout_weight="115"/>
 
-    <RadioButton
+    <CheckBox
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:id="@+id/task_done_btn"
-        android:button="@drawable/radio_btn"
-        android:background="@drawable/radio_btn"
+        android:button="@drawable/task_checkbox"
+        android:background="@drawable/task_checkbox"
         android:layout_weight="1"
         android:focusable="false"
         android:layout_marginEnd="10dp"

@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -93,7 +95,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         final String header = (String) getGroup(groupPosition);
         String priorityImage = (String) getPriority(groupPosition);
-        String statusOfTask = (String) getStatus(groupPosition);
+        final String statusOfTask = (String) getStatus(groupPosition);
 
         Log.e("TAG", "Priority in adapter - " + priorityImage);
         Log.e("TAG", "Status in adapter - " + statusOfTask);
@@ -120,19 +122,29 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
         headerOfGroup.setText(header);
 
-        if(statusOfTask.equals("true")) headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+        final CheckBox done = (CheckBox) convertView.findViewById(R.id.task_done_btn);
 
-        final Button done = (Button) convertView.findViewById(R.id.task_done_btn);
+        if(statusOfTask.equals("true")){
+            headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+            done.setChecked(true);
+        }else if(statusOfTask.equals("false")){
+            headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.dark_blue));
+            done.setChecked(false);
+        }
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
-
                 FirebaseUser firebaseUser;
                 DatabaseReference dataBase;
                 firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                 dataBase = FirebaseDatabase.getInstance().getReference();
-                dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(header).child("status").setValue("true");
+                    if (statusOfTask.equals("true")) {
+                        headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.dark_blue));
+                        dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(header).child("status").setValue("false");
+                    } else if (statusOfTask.equals("false")) {
+                        headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+                        dataBase.child("users").child(firebaseUser.getUid()).child("tasks").child(day).child(header).child("status").setValue("true");
+                    }
                 CustomExpandableListAdapter.this.notifyDataSetChanged();
             }
         });
@@ -144,6 +156,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         List<String> child = (List<String>) getChild(groupPosition, childPosition);
+        String statusOfTask = (String) getStatus(groupPosition);
 
         if(convertView == null)
         {
@@ -154,6 +167,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         TextView childText = (TextView) convertView.findViewById(R.id.child_text);
         Log.e("TAG", "Subtasks adapter :" + child.get(childPosition));
         childText.setText(child.get(childPosition));
+        if(statusOfTask.equals("true")){
+            childText.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+        }else if(statusOfTask.equals("false")){
+           childText.setTextColor(ContextCompat.getColor(context, R.color.dark_blue));
+        }
+
         return convertView;
     }
 

@@ -139,6 +139,7 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         uId = firebaseUser.getUid();
         databaseReference = firebasedatabase.getReference("users").child(uId).child("tasks").child(day);
+
         Query query = databaseReference.orderByChild("priority");
         query.addValueEventListener(new ValueEventListener() {
             @Override
@@ -164,14 +165,12 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
 
                         mStatus =  statusSnapshot.getValue(String.class);
                         Log.e("TAG", "Status: " + mStatus);
+
+                        mPriority = prioritySnapshot.getValue(String.class);
+                        Log.e("TAG", "Priority: " + mPriority);
                     }
                     subtasks.put(taskName, childSubtasks);
                     status.put(taskName, mStatus);
-
-                    for (DataSnapshot mPrioritySnapshot : prioritySnapshot.getChildren()) {
-                        mPriority = mPrioritySnapshot.getValue(String.class);
-                        Log.e("TAG", "Priority: " + mPriority);
-                    }
                     priority.put(taskName, mPriority);
 
                 }
