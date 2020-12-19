@@ -34,7 +34,6 @@
         android:fontFamily="@font/poppins_semibold"
         android:scrollbarStyle="outsideInset"
         android:theme="@style/CalenderViewCustom"
-
         android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"
         android:textColorPrimary="@color/dark_blue"/>
 

@@ -1,4 +1,4 @@
-package com.example.snaptask.fragments;
+package com.example.snaptask.addFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -136,7 +136,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
                     Date currentTime = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     day = df.format(currentTime);
-                    System.out.println(firebaseUser.getUid());
+
                 }
 
                 if (tomorrowBtn.isChecked()) {
@@ -152,6 +152,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
                     dt = c.getTime();
                     SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
                     day = df.format(dt);
+                    System.out.println(day);
                 }
 
                 if (chooseDayBtn.isChecked()) {

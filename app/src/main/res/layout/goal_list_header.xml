@@ -10,7 +10,7 @@
         android:id="@+id/image_view_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/red"
+        android:src="@drawable/dark_blue_circle"
         android:layout_marginStart="10dp"
         android:paddingTop="5dp"
         android:layout_alignParentStart="true"
@@ -31,7 +31,7 @@
     <CheckBox
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:id="@+id/task_done_btn"
+        android:id="@+id/goal_done_btn"
         android:button="@drawable/task_checkbox"
         android:background="@drawable/task_checkbox"
         android:focusable="false"

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/top_rel_layout">
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/go_back"
+            android:background="@drawable/arrow_back_24"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/delete_note"
+            android:background="@drawable/ic__close_35"
+            android:layout_toStartOf="@+id/apply_changes"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/apply_changes"
+            android:background="@drawable/ic_baseline_check_24"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_title"
+        android:layout_below="@+id/top_rel_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/poppins_semibold"
+        android:textSize="18sp"
+        android:paddingStart="15dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/note_text"
+        android:layout_below="@+id/note_title"
+        android:background="@drawable/switch_button"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#000000"
+        android:fontFamily="@font/poppins"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:gravity="start"
+        android:autofillHints="" />
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.snaptask;
+package com.example.snaptask.helpers;
 
 public class User {
     private String name, email, password;

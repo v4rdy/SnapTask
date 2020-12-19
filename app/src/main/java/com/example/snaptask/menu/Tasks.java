@@ -1,27 +1,26 @@
 package com.example.snaptask.menu;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import com.example.snaptask.CustomExpandableListAdapter;
+import com.example.snaptask.adapters.TasksExpandableListAdapter;
 import com.example.snaptask.MainCalendar;
 import com.example.snaptask.R;
-import com.example.snaptask.fragments.AddTasksFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +40,7 @@ import java.util.Locale;
 public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelected{
 
     ExpandableListView expandableListView;
-    CustomExpandableListAdapter expandableListAdapter;
+    TasksExpandableListAdapter expandableListAdapter;
 
     List<String> tasks;
     HashMap<String, List<String>> subtasks;
@@ -53,6 +52,15 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
     private FirebaseUser firebaseUser;
     private Button showCalendarBtn;
     public String day;
+    private DrawerLayout drawer;
+
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +70,20 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.tasks);
         expandableListView = (ExpandableListView) findViewById(R.id.tasks_list);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         setCurrentDate();
         fillData();
 
-        expandableListAdapter = new CustomExpandableListAdapter(this, tasks, subtasks, priority, status, day);
+        expandableListAdapter = new TasksExpandableListAdapter(this, tasks, subtasks, priority, status, day);
         expandableListView.setAdapter(expandableListAdapter);
 
         showCalendarBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +132,7 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
         showCalendarBtn.setText(date);
         day = date;
         fillData();
-        expandableListAdapter = new CustomExpandableListAdapter(this, tasks, subtasks, priority, status, day);
+        expandableListAdapter = new TasksExpandableListAdapter(this, tasks, subtasks, priority, status, day);
         expandableListView.setAdapter(expandableListAdapter);
 
     }

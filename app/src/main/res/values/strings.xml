@@ -39,5 +39,20 @@
     <string name="text">Text</string>
     <string name="add_task">Add new task</string>
     <string name="day_today">Day: today</string>
+    <string name="add_new_goal">Add new goal</string>
+    <string name="add_new_note">Add new note</string>
+    <string name="delete">Delete</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="others">Others</string>
+    <string name="log_out">Log out</string>
+    <string name="profile">Profile</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
 
 </resources>

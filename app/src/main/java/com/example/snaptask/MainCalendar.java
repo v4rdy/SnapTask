@@ -2,24 +2,21 @@ package com.example.snaptask;
 
         import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
-        import androidx.appcompat.app.AppCompatActivity;
         import androidx.fragment.app.DialogFragment;
 
         import android.content.Context;
-        import android.content.Intent;
+        import android.icu.util.Calendar;
         import android.os.Bundle;
         import android.util.Log;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.Button;
         import android.widget.CalendarView;
 
-        import com.example.snaptask.fragments.AddTasksFragment;
-        import com.example.snaptask.menu.Add;
+        import java.util.Date;
 
 public class MainCalendar extends DialogFragment {
-    private CalendarView Calendar;
+    private CalendarView calendarView;
     private String date;
     private static final String TAG = "MainCalendar";
 
@@ -38,13 +35,14 @@ public class MainCalendar extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Calendar = (CalendarView) view.findViewById(R.id.calendarView);
-
-        Calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView = (CalendarView) view.findViewById(R.id.calendarView);
+        calendarView.setMinDate((new Date().getTime()));
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 month +=1;
-                date = (dayOfMonth+"-"+month+"-"+year);
+                if(dayOfMonth>9) date = (dayOfMonth+"-"+month+"-"+year);
+                else date = ("0"+dayOfMonth+"-"+month+"-"+year);
                 System.out.println(date);
                 mOnInputSelected.sendDate(date);
                 getDialog().dismiss();

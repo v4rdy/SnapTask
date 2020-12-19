@@ -58,5 +58,24 @@
             android:textColor="@color/hint2"
             android:textSize="15sp"
             />
+
+        <Button
+            android:id="@+id/apply_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/apply_button"
+            android:drawableStart="@drawable/ic_baseline_check_24"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/add_new_goal"
+            android:textAllCaps="false"
+            android:layout_gravity="center"
+            android:textColor="@color/dark_blue"
+            android:textSize="15sp"
+            />
     </LinearLayout>
 </ScrollView>

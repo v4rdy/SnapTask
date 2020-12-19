@@ -1,36 +1,47 @@
 package com.example.snaptask.menu;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ActionMenuView;
-import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.snaptask.MainActivity;
+import com.example.snaptask.navigationViewFragments.AboutFragment;
+import com.example.snaptask.navigationViewFragments.ProfileFragment;
 import com.example.snaptask.R;
-import com.example.snaptask.fragments.AddGoalsFragment;
-import com.example.snaptask.fragments.AddNotesFragment;
-import com.example.snaptask.fragments.AddTasksFragment;
-import com.example.snaptask.menu.Goals;
-import com.example.snaptask.menu.Notes;
-import com.example.snaptask.menu.Statistics;
-import com.example.snaptask.menu.Tasks;
+import com.example.snaptask.addFragments.AddGoalsFragment;
+import com.example.snaptask.addFragments.AddNotesFragment;
+import com.example.snaptask.addFragments.AddTasksFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 
 public class Add extends AppCompatActivity {
+
+    private DrawerLayout drawer;
+
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
+        drawer.closeDrawer(GravityCompat.START);
+        }
+        else super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +50,23 @@ public class Add extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.add);
+        NavigationView navigationView = findViewById(R.id.left_nav_view);
+        navigationView.bringToFront();
         final RadioButton notes_button = findViewById(R.id.notes_btn);
         final RadioButton tasks_button = findViewById(R.id.tasks_btn);
         final RadioButton goals_button = findViewById(R.id.goals_btn);
         RadioGroup rgCategory = findViewById(R.id.rg_cat);
-        Button logOut = findViewById(R.id.logout);
         RadioButton rb = findViewById(R.id.choose_day_btn);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         String date = null;
         Bundle extras = getIntent().getExtras();
@@ -63,7 +84,38 @@ public class Add extends AppCompatActivity {
         Fragment fragment1 = new AddTasksFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment1).commit();
 
-
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Log.e("TAG", "Item Selected");
+                switch (item.getItemId())
+                {
+                    case R.id.logout_btn:
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(Add.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        finish();
+                        startActivity(intent);
+                        break;
+                    case R.id.profile_btn:
+                        System.out.println("profile");
+                        Fragment fragment = new ProfileFragment();
+                        FrameLayout fg = findViewById(R.id.fragment_container2);
+                        fg.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, fragment).commit();
+                        break;
+                    case R.id.about_btn:
+                        Fragment fragment1 = new AboutFragment();
+                        FrameLayout fg1 = findViewById(R.id.fragment_container2);
+                        fg1.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, fragment1).commit();
+                        break;
+                }
+                return true;
+            }
+        });
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -87,7 +139,6 @@ public class Add extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), Statistics.class));
                         overridePendingTransition(0,0);
                         return true;
-
                 }
                 return false;
             }
@@ -143,18 +194,6 @@ public class Add extends AppCompatActivity {
 
             }
         });
-
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(Add.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
 
     }
 
