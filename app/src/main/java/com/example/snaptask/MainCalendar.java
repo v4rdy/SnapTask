@@ -2,9 +2,13 @@ package com.example.snaptask;
 
         import androidx.annotation.NonNull;
         import androidx.annotation.Nullable;
+        import androidx.appcompat.app.AlertDialog;
         import androidx.fragment.app.DialogFragment;
 
+        import android.app.Dialog;
         import android.content.Context;
+        import android.graphics.Color;
+        import android.graphics.drawable.ColorDrawable;
         import android.icu.util.Calendar;
         import android.os.Bundle;
         import android.util.Log;
@@ -25,10 +29,12 @@ public class MainCalendar extends DialogFragment {
     }
     public OnDateSelected mOnInputSelected;
 
+
     @Override
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.calendar_background);
         return inflater.inflate(R.layout.activity_main_calendar, container, false);
 
     }

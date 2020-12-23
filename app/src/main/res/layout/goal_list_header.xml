@@ -27,10 +27,18 @@
         android:fontFamily="@font/poppins_semibold"
         android:layout_toEndOf="@+id/image_view_header"
         />
+    <Button
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:id="@+id/delete_goal"
+        android:background="@drawable/ic__close_35"
+        android:layout_toStartOf="@+id/goal_done_btn"
+        android:layout_marginEnd="5dp"
+        android:visibility="invisible"/>
 
     <CheckBox
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:id="@+id/goal_done_btn"
         android:button="@drawable/task_checkbox"
         android:background="@drawable/task_checkbox"

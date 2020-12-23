@@ -21,6 +21,8 @@
 
         />
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,6 +38,7 @@
             android:elevation="4dp"
             >
             <TextView
+                android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -45,6 +48,19 @@
                 android:textColor="@color/white"
                 />
         </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_container2"
+            android:visibility="gone"
+            android:layout_below="@+id/toolbar"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linlay"
+    android:layout_below="@+id/toolbar"
+    android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -57,21 +73,20 @@
             android:textColor="@color/dark_blue"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_below="@+id/toolbar"
             android:id="@+id/text_choose"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@+id/text_choose"
+
             android:id="@+id/lin_lay">
 
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:id="@+id/rg_cat">
+                android:id="@+id/rg_period">
                 <RadioButton
                     android:id="@+id/week_btn"
                     android:layout_width="wrap_content"
@@ -167,34 +182,36 @@
             android:layout_below="@+id/completed_tasks"
             android:layout_marginTop="10dp"
             >
+
             <TextView
                 android:id="@+id/comp_tasks_value"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:text="45"
-                android:textColor="@color/dark_blue"
-                android:textSize="18sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_weight="1"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/switch_button"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
                 android:textAlignment="center"
-                android:gravity="center"/>
+                android:text="@string/zero"
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/uncomp_tasks_value"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:text="11"
-                android:textColor="@color/dark_blue"
-                android:textSize="18sp"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_weight="1"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
                 android:background="@drawable/switch_button"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center"
+                android:text="@string/zero"
                 android:textAlignment="center"
-                android:gravity="center"/>
+                android:textColor="@color/dark_blue"
+                android:textSize="18sp" />
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
@@ -214,15 +231,14 @@
             android:id="@+id/activity_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100%"
+            android:text="@string/zero_percent"
             android:textColor="@color/dark_blue"
             android:textSize="62sp"
             android:fontFamily="@font/poppins"
             android:background="@drawable/blue_circle"
             android:textAlignment="center"
             android:gravity="center"
-            android:layout_below="@+id/text_activity"
-            android:layout_centerInParent="true"/>
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -244,10 +260,10 @@
                 />
 
             <TextView
-                android:id="@+id/competed_goals"
+                android:id="@+id/completed_goals"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:text="11"
+                android:text="@string/zero"
                 android:textColor="@color/dark_blue"
                 android:textSize="18sp"
                 android:fontFamily="@font/poppins_semibold"
@@ -261,7 +277,7 @@
                 android:paddingEnd="70dp"/>
 
         </LinearLayout>
-
+</LinearLayout>
         <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"

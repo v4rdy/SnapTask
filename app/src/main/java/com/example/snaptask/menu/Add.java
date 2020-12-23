@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.example.snaptask.MainActivity;
 import com.example.snaptask.navigationViewFragments.AboutFragment;
@@ -42,6 +43,8 @@ public class Add extends AppCompatActivity {
         }
         else super.onBackPressed();
     }
+    
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +53,14 @@ public class Add extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setSelectedItemId(R.id.add);
-        NavigationView navigationView = findViewById(R.id.left_nav_view);
+        final NavigationView navigationView = findViewById(R.id.left_nav_view);
         navigationView.bringToFront();
         final RadioButton notes_button = findViewById(R.id.notes_btn);
         final RadioButton tasks_button = findViewById(R.id.tasks_btn);
         final RadioButton goals_button = findViewById(R.id.goals_btn);
         RadioGroup rgCategory = findViewById(R.id.rg_cat);
         RadioButton rb = findViewById(R.id.choose_day_btn);
+        final TextView label = (TextView) findViewById(R.id.label);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -105,12 +109,17 @@ public class Add extends AppCompatActivity {
                         FrameLayout fg = findViewById(R.id.fragment_container2);
                         fg.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, fragment).commit();
+                        label.setText(getString(R.string.profile));
+                        drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.about_btn:
                         Fragment fragment1 = new AboutFragment();
                         FrameLayout fg1 = findViewById(R.id.fragment_container2);
                         fg1.setVisibility(View.VISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container2, fragment1).commit();
+                        label.setText(getString(R.string.about));
+                        drawer.closeDrawer(GravityCompat.START);
+
                         break;
                 }
                 return true;
@@ -126,6 +135,9 @@ public class Add extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.add:
+                        FrameLayout fg = findViewById(R.id.fragment_container2);
+                        fg.setVisibility(View.GONE);
+                        label.setText(getString(R.string.title_add));
                         return true;
                     case R.id.tasks:
                         startActivity(new Intent(getApplicationContext(), Tasks.class));
@@ -197,4 +209,6 @@ public class Add extends AppCompatActivity {
 
     }
 
+    
+    
 }

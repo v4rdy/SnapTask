@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     tools:context=".MainCalendar"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/switch_button"
+     >
 
 
 <TextView
@@ -28,7 +29,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="5dp"
-        android:background="@drawable/switch_button"
+        android:background="@color/white"
         android:dateTextAppearance="@style/CalenderViewDateCustomText"
         android:focusedMonthDateColor="@color/dark_blue"
         android:fontFamily="@font/poppins_semibold"

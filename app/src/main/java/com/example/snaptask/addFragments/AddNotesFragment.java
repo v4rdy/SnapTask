@@ -1,5 +1,6 @@
 package com.example.snaptask.addFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.snaptask.R;
+import com.example.snaptask.menu.Goals;
+import com.example.snaptask.menu.Notes;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +56,7 @@ public class AddNotesFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 writeNote();
+                newActivityAfterAddNote();
             }
         });
     }
@@ -72,6 +76,13 @@ public class AddNotesFragment extends Fragment {
             database.child("users").child(firebaseUser.getUid()).child("notes").child(Title).child("text").setValue(Text);
             database.child("users").child(firebaseUser.getUid()).child("notes").child(Title).child("date").setValue(day);
         }
+    }
+
+    private void newActivityAfterAddNote(){
+        Toast.makeText(getActivity(), "New note was added!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), Notes.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 
 }

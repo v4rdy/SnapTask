@@ -1,9 +1,14 @@
 package com.example.snaptask.addFragments;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.example.snaptask.MainCalendar;
 import com.example.snaptask.R;
+import com.example.snaptask.menu.Goals;
+import com.example.snaptask.menu.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -90,6 +97,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
             @Override
             public void onClick(View v) {
                 writeTask();
+                newActivityAfterAddTask();
             }
         });
 
@@ -167,6 +175,7 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
                             MainCalendar mainCalendar = new MainCalendar();
                             mainCalendar.show(getParentFragmentManager(), "Main Calendar");
                             mainCalendar.setTargetFragment(AddTasksFragment.this, 1);
+
                         }
                     });
 
@@ -221,7 +230,10 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
 
 
     private void addView() {
+        Animation onAdded = AnimationUtils.loadAnimation(getActivity(), R.anim.sample_anim);
+
         final View subtaskView = getLayoutInflater().inflate(R.layout.subtask_raw, null, false);
+        subtaskView.startAnimation(onAdded);
         ImageView imageClose = (ImageView) subtaskView.findViewById(R.id.remove_subtask);
 
         imageClose.setOnClickListener(new View.OnClickListener() {
@@ -236,7 +248,9 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
     }
 
     private void removeView(View view) {
+
         sb_lay.removeView(view);
+
     }
 
     @Override
@@ -245,6 +259,13 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         day = date;
     }
 
+
+    private void newActivityAfterAddTask(){
+        Toast.makeText(getActivity(), "New task was added!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), Tasks.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
     }
 
 

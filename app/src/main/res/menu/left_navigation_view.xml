@@ -19,10 +19,6 @@
         android:title="@string/others"
         android:id="@+id/others_menu">
         <menu>
-            <item android:title="@string/settings"
-                android:id="@+id/settings_btn"
-                android:icon="@drawable/settings_icon"
-                />
              <item android:title="@string/about"
                  android:id="@+id/about_btn"
                  android:icon="@drawable/info_icon"

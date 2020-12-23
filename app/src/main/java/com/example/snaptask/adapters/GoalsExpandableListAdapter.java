@@ -5,7 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -27,11 +30,13 @@ public class GoalsExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> listChildren;
     private HashMap<String, String> status;
 
+
     public GoalsExpandableListAdapter(Context context, List<String> listHeader, HashMap<String, List<String>> listChildren, HashMap<String, String> status){
         this.context = context;
         this.listHeader = listHeader;
         this.listChildren = listChildren;
         this.status = status;
+
 
     }
 
@@ -79,7 +84,6 @@ public class GoalsExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         final String header = (String) getGroup(groupPosition);
         final String statusOfGoal = (String) getStatus(groupPosition);
-
         Log.e("TAG", "Status in adapter - " + statusOfGoal);
 
         if(convertView == null)
@@ -92,12 +96,15 @@ public class GoalsExpandableListAdapter extends BaseExpandableListAdapter {
         headerOfGroup.setText(header);
 
         final CheckBox done = (CheckBox) convertView.findViewById(R.id.goal_done_btn);
+        final Button deleteGoal = (Button) convertView.findViewById(R.id.delete_goal);
 
         if(statusOfGoal.equals("true")){
             headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
+            deleteGoal.setVisibility(View.VISIBLE);
             done.setChecked(true);
         }else if(statusOfGoal.equals("false")){
             headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.dark_blue));
+            deleteGoal.setVisibility(View.INVISIBLE);
             done.setChecked(false);
         }
         done.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +117,24 @@ public class GoalsExpandableListAdapter extends BaseExpandableListAdapter {
                     if (statusOfGoal.equals("true")) {
                         headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.dark_blue));
                         dataBase.child("users").child(firebaseUser.getUid()).child("goals").child(header).child("status").setValue("false");
+
                     } else if (statusOfGoal.equals("false")) {
                         headerOfGroup.setTextColor(ContextCompat.getColor(context, R.color.hint2));
                         dataBase.child("users").child(firebaseUser.getUid()).child("goals").child(header).child("status").setValue("true");
+
                     }
                 GoalsExpandableListAdapter.this.notifyDataSetChanged();
+            }
+        });
+
+        deleteGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseUser firebaseUser;
+                DatabaseReference dataBase;
+                firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                dataBase = FirebaseDatabase.getInstance().getReference();
+                dataBase.child("users").child(firebaseUser.getUid()).child("goals").child(header).child("delete_status").setValue("true");
             }
         });
         return convertView;

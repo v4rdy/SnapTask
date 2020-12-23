@@ -1,9 +1,12 @@
 package com.example.snaptask.addFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.snaptask.R;
+import com.example.snaptask.menu.Goals;
+import com.example.snaptask.menu.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -66,6 +71,7 @@ public class AddGoalsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 writeGoal();
+                newActivityAfterAddGoal();
             }
         });
 
@@ -96,11 +102,21 @@ public class AddGoalsFragment extends Fragment {
                 else database.child("users").child(firebaseUser.getUid()).child("goals").child(goal).child("steps").push().setValue(goalStep[i]);
             }
             database.child("users").child(firebaseUser.getUid()).child("goals").child(goal).child("status").setValue("false");
+            database.child("users").child(firebaseUser.getUid()).child("goals").child(goal).child("delete_status").setValue("false");
+
         }
+        else{
+            database.child("users").child(firebaseUser.getUid()).child("goals").child(goal).child("status").setValue("false");
+            database.child("users").child(firebaseUser.getUid()).child("goals").child(goal).child("delete_status").setValue("false");
+
+        }
+
     }
 
     public void addView(){
+        Animation onAdded = AnimationUtils.loadAnimation(getActivity(), R.anim.sample_anim);
         final View stepView = getLayoutInflater().inflate(R.layout.step_raw, null, false);
+        stepView.startAnimation(onAdded);
         ImageView imageClose = (ImageView)stepView.findViewById(R.id.remove_step);
 
         imageClose.setOnClickListener(new View.OnClickListener() {
@@ -116,5 +132,12 @@ public class AddGoalsFragment extends Fragment {
 
     private void removeView(View view){
         step_lay.removeView(view);
+    }
+
+    private void newActivityAfterAddGoal(){
+        Toast.makeText(getActivity(), "New goal was added!", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), Goals.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

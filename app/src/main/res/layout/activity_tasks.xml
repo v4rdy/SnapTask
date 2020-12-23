@@ -41,6 +41,7 @@
                     android:elevation="4dp"
                     >
                     <TextView
+                        android:id="@+id/label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -51,6 +52,11 @@
                         />
                 </androidx.appcompat.widget.Toolbar>
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/fragment_container2"
+                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/show_calendar_btn"
@@ -69,7 +75,20 @@
                     />
             </LinearLayout>
 
-
+        <TextView
+            android:id="@+id/no_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="You haven't got active tasks"
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/dark_blue"
+            android:layout_below="@+id/linear_layout"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            />
                     <ExpandableListView
                         android:id="@+id/tasks_list"
                         android:layout_width="match_parent"
