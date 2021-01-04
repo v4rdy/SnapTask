@@ -50,6 +50,21 @@
                 android:textColor="@color/white"
                 />
         </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/no_notes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="You haven't got any notes"
+            android:textSize="22sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/dark_blue"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

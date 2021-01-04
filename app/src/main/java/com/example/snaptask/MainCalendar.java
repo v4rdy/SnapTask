@@ -47,8 +47,10 @@ public class MainCalendar extends DialogFragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 month +=1;
-                if(dayOfMonth>9) date = (dayOfMonth+"-"+month+"-"+year);
-                else date = ("0"+dayOfMonth+"-"+month+"-"+year);
+                if(dayOfMonth>9 && month>9) date = (dayOfMonth+"-"+month+"-"+year);
+                else if(dayOfMonth<10  && month<10) date = ("0"+dayOfMonth+"-"+"0"+month+"-"+year);
+                else if(dayOfMonth>9 && month<10) date = (dayOfMonth+"-"+"0"+month+"-"+year);
+                else if (dayOfMonth<10 && month>9) date = ("0"+dayOfMonth+"-"+month+"-"+year);
                 System.out.println(date);
                 mOnInputSelected.sendDate(date);
                 getDialog().dismiss();

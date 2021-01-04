@@ -82,6 +82,8 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataBase = FirebaseDatabase.getInstance().getReference();
+        dataBase.keepSynced(true);
+
 
 
 
@@ -183,6 +185,8 @@ public class AddTasksFragment extends Fragment implements MainCalendar.OnDateSel
             }
 
         });
+
+
 
     }
 

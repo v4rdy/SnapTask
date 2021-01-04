@@ -50,11 +50,13 @@ public class Goals extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
     private DrawerLayout drawer;
+    private TextView noGoals;
     private ValueEventListener listener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
             if (goals.size() > 0) goals.clear();
+            noGoals.setVisibility(View.GONE);
 
             for (DataSnapshot goalSnapshot : dataSnapshot.getChildren()) {
                 DataSnapshot stepSnapshot = goalSnapshot.child("steps");
@@ -86,6 +88,7 @@ public class Goals extends AppCompatActivity {
                 }
 
             }
+            if(goals.size()==0) noGoals.setVisibility(View.VISIBLE);
             expandableListAdapter.notifyDataSetChanged();
         }
 
@@ -116,6 +119,7 @@ public class Goals extends AppCompatActivity {
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         final TextView label = (TextView) findViewById(R.id.label);
+        noGoals = (TextView) findViewById(R.id.no_goals);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 

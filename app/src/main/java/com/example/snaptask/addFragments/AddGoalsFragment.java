@@ -57,6 +57,8 @@ public class AddGoalsFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance().getReference();
+        database.keepSynced(true);
+
 
         this.getResources().getDisplayMetrics();
 
@@ -74,6 +76,7 @@ public class AddGoalsFragment extends Fragment {
                 newActivityAfterAddGoal();
             }
         });
+
 
     }
 

@@ -59,6 +59,7 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
     private Button showCalendarBtn;
+    private TextView noTasks;
     public String day;
     private DrawerLayout drawer;
     private ValueEventListener listener = new ValueEventListener() {
@@ -67,6 +68,7 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
 
             if(tasks.size() > 0) tasks.clear();
 
+            noTasks.setVisibility(View.GONE);
             for(DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
                 DataSnapshot subtaskSnapshot = taskSnapshot.child("subtasks");
                 DataSnapshot prioritySnapshot = taskSnapshot.child("priority");
@@ -95,6 +97,7 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
                 priority.put(taskName, mPriority);
 
             }
+            if (tasks.size()==0) noTasks.setVisibility(View.VISIBLE);
             expandableListAdapter.notifyDataSetChanged();
         }
 
@@ -125,7 +128,7 @@ public class Tasks extends AppCompatActivity implements MainCalendar.OnDateSelec
         expandableListView = (ExpandableListView) findViewById(R.id.tasks_list);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final TextView label = (TextView) findViewById(R.id.label);
-        final TextView noTasks = (TextView) findViewById(R.id.no_tasks);
+        noTasks = (TextView) findViewById(R.id.no_tasks);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

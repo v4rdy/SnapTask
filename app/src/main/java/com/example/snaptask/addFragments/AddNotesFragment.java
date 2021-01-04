@@ -51,6 +51,8 @@ public class AddNotesFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance().getReference();
+        database.keepSynced(true);
+
 
         applyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +61,8 @@ public class AddNotesFragment extends Fragment {
                 newActivityAfterAddNote();
             }
         });
+
+
     }
 
     public void writeNote(){

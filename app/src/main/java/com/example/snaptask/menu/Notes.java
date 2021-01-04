@@ -47,6 +47,7 @@ public class Notes extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseUser firebaseUser;
     private DrawerLayout drawer;
+    private TextView noNotes;
 
     @Override
     public void onBackPressed() {
@@ -68,6 +69,7 @@ public class Notes extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.notes);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         final TextView label = (TextView) findViewById(R.id.label);
+        noNotes = (TextView) findViewById(R.id.no_notes);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -170,6 +172,7 @@ public class Notes extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(noteList.size() > 0) noteList.clear();
+                noNotes.setVisibility(View.GONE);
                 for (DataSnapshot notesSnapshot : dataSnapshot.getChildren()) {
                     DataSnapshot textSnapshot = notesSnapshot.child("text");
                     DataSnapshot dateSnapshot = notesSnapshot.child("date");
@@ -185,6 +188,7 @@ public class Notes extends AppCompatActivity {
                     Note note = new Note(ntName, ntText, ntDate);
                     noteList.add(note);
                 }
+                if (noteList.size()==0) noNotes.setVisibility(View.VISIBLE);
                 notesRecyclerViewAdapter.notifyDataSetChanged();
             }
 

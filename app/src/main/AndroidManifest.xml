@@ -3,6 +3,7 @@
     package="com.example.snaptask">
 
     <application
+        android:name=".helpers.OfflineCapability"
         android:allowBackup="true"
         android:icon="@mipmap/main_icon"
         android:label="@string/app_name"
