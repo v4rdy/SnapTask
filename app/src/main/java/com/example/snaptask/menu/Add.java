@@ -1,6 +1,8 @@
 package com.example.snaptask.menu;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.snaptask.AlarmReceiver;
 import com.example.snaptask.MainActivity;
 import com.example.snaptask.navigationViewFragments.AboutFragment;
 import com.example.snaptask.navigationViewFragments.ProfileFragment;
@@ -30,6 +33,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+
+import java.util.Calendar;
 
 
 public class Add extends AppCompatActivity {
@@ -84,6 +89,15 @@ public class Add extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("DATE_KEY", date);
         frag.setArguments(bundle);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 30);
+        calendar.set(Calendar.SECOND, 0);
+        Intent intent1 = new Intent(Add.this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(Add.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) Add.this.getSystemService(Add.this.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
         Fragment fragment1 = new AddTasksFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment1).commit();
