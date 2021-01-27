@@ -99,21 +99,22 @@
                 android:textSize="20sp"
                 android:textAlignment="center" />
 
-            <RadioButton
-                android:id="@+id/tasks_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:background="@drawable/radio_btn"
-                android:button="@drawable/radio_btn"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:checked="true"
-                android:text="@string/title_tasks"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textAlignment="center" />
+                <RadioButton
+                    android:id="@+id/tasks_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_btn"
+                    android:button="@drawable/radio_btn"
+                    android:checked="true"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:onClick="displayNotification"
+                    android:text="@string/title_tasks"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
             <RadioButton
                 android:id="@+id/goals_btn"

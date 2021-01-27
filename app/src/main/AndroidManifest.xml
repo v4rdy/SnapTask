@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.snaptask">
 
+    <uses-permission android:name="android.permission.SET_ALARM"/>
+
     <application
         android:name=".helpers.OfflineCapability"
         android:allowBackup="true"
@@ -97,7 +99,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <receiver android:name=".AlarmReceiver"/>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:process=":remote" />
     </application>
 
 </manifest>

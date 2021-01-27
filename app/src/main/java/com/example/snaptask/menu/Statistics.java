@@ -111,11 +111,11 @@ public class Statistics extends AppCompatActivity {
                 {
                     case R.id.logout_btn:
                         FirebaseAuth.getInstance().signOut();
+                        finish();
                         Intent intent = new Intent(Statistics.this, MainActivity.class);
+                        startActivity(intent);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        finish();
-                        startActivity(intent);
                         break;
                     case R.id.profile_btn:
                         System.out.println("profile");

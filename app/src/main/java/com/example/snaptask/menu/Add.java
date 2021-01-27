@@ -2,10 +2,16 @@ package com.example.snaptask.menu;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -30,6 +36,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -39,17 +47,16 @@ import java.util.Calendar;
 
 public class Add extends AppCompatActivity {
 
+
     private DrawerLayout drawer;
 
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)) {
-        drawer.closeDrawer(GravityCompat.START);
-        }
-        else super.onBackPressed();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else super.onBackPressed();
     }
-    
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,32 +97,24 @@ public class Add extends AppCompatActivity {
         bundle.putString("DATE_KEY", date);
         frag.setArguments(bundle);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 8);
-        calendar.set(Calendar.MINUTE, 30);
-        calendar.set(Calendar.SECOND, 0);
-        Intent intent1 = new Intent(Add.this, AlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(Add.this, 0,intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager am = (AlarmManager) Add.this.getSystemService(Add.this.ALARM_SERVICE);
-        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        setAlarm();
 
         Fragment fragment1 = new AddTasksFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment1).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment1).commit();
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Log.e("TAG", "Item Selected");
-                switch (item.getItemId())
-                {
+                switch (item.getItemId()) {
                     case R.id.logout_btn:
                         FirebaseAuth.getInstance().signOut();
+                        finish();
                         Intent intent = new Intent(Add.this, MainActivity.class);
+                        startActivity(intent);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        finish();
-                        startActivity(intent);
                         break;
                     case R.id.profile_btn:
                         System.out.println("profile");
@@ -143,10 +142,10 @@ public class Add extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.notes:
                         startActivity(new Intent(getApplicationContext(), Notes.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.add:
                         FrameLayout fg = findViewById(R.id.fragment_container2);
@@ -155,15 +154,15 @@ public class Add extends AppCompatActivity {
                         return true;
                     case R.id.tasks:
                         startActivity(new Intent(getApplicationContext(), Tasks.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.goals:
                         startActivity(new Intent(getApplicationContext(), Goals.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                     case R.id.statistics:
                         startActivity(new Intent(getApplicationContext(), Statistics.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
@@ -173,12 +172,11 @@ public class Add extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 Fragment fragment = new AddTasksFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
-                if(tasks_button.isChecked()) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                if (tasks_button.isChecked()) {
                     tasks_button.setTextColor(getResources().getColor(R.color.white));
                     notes_button.setTextColor(getResources().getColor(R.color.blue));
                     goals_button.setTextColor(getResources().getColor(R.color.blue));
-
                     tasks_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -189,7 +187,7 @@ public class Add extends AppCompatActivity {
                         }
                     });
                 }
-                if(notes_button.isChecked()) {
+                if (notes_button.isChecked()) {
                     tasks_button.setTextColor(getResources().getColor(R.color.blue));
                     notes_button.setTextColor(getResources().getColor(R.color.white));
                     goals_button.setTextColor(getResources().getColor(R.color.blue));
@@ -202,7 +200,7 @@ public class Add extends AppCompatActivity {
                         }
                     });
                 }
-                if(goals_button.isChecked()) {
+                if (goals_button.isChecked()) {
                     tasks_button.setTextColor(getResources().getColor(R.color.blue));
                     notes_button.setTextColor(getResources().getColor(R.color.blue));
                     goals_button.setTextColor(getResources().getColor(R.color.white));
@@ -217,12 +215,26 @@ public class Add extends AppCompatActivity {
                 }
 
 
-
             }
         });
 
     }
 
-    
-    
+    private void setAlarm() {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 35);
+        calendar.set(Calendar.SECOND, 0);
+
+        Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+    }
+
+
 }
